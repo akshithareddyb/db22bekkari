@@ -1,8 +1,15 @@
 var Season = require('../models/Season'); 
  
 // List of all Seasons 
-exports.Season_list = function(req, res) { 
-    res.send('NOT IMPLEMENTED: Season list'); 
+exports.Season_list = async function(req, res) { 
+    try{ 
+        theSeasons = await Season.find(); 
+        res.send(theSeasons); 
+    } 
+    catch(err){ 
+        res.status(500); 
+        res.send(`{"error": ${err}}`); 
+    }   
 }; 
  
 // for a specific Season. 
