@@ -31,3 +31,16 @@ exports.Season_delete = function(req, res) {
 exports.Season_update_put = function(req, res) { 
     res.send('NOT IMPLEMENTED: Season update PUT' + req.params.id); 
 }; 
+
+// VIEWS 
+// Handle a show all view 
+exports.Season_view_all_Page = async function(req, res) { 
+    try{ 
+        theSeasons = await Season.find(); 
+        res.render('Season', { title: 'Season Search Results', results: theSeasons }); 
+    } 
+    catch(err){ 
+        res.status(500); 
+        res.send(`{"error": ${err}}`); 
+    }   
+}; 
