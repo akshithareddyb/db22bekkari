@@ -51,8 +51,21 @@ exports.Season_delete = function(req, res) {
 }; 
  
 // Handle Season update form on PUT. 
-exports.Season_update_put = function(req, res) { 
-    res.send('NOT IMPLEMENTED: Season update PUT' + req.params.id); 
+exports.Season_update_put = async function(req, res) { 
+    console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`) 
+    try { 
+        let toUpdate = await Season.findById( req.params.id) 
+        // Do updates of properties 
+        if(req.body.Season_type) toUpdate.Season_type = req.body.Season_type; 
+        if(req.body.temperature) toUpdate.temperature = req.body.temperature; 
+        if(req.body.Season_month) toUpdate.Season_month = req.body.Season_month; 
+        let result = await toUpdate.save(); 
+        console.log("Sucess " + result) 
+        res.send(result) 
+    } catch (err) { 
+        res.status(500) 
+        res.send(`{"error": ${err}: Update for id ${req.params.id} failed`); 
+    } 
 }; 
 
 // VIEWS 
