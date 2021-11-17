@@ -2,21 +2,25 @@ extends layout
  
 block content 
   h1= title 
-  - let Seasonid = toShow._id
-  div 
-    div.row 
-      div(class='SeasonAttr mr-3') Season ID is: 
-      div #{Seasonid}
-  form(id='SeasonForm', action="/resource/Season", method="PUT") 
+  - let Seasonid = toShow._id 
+  - let Season_type = toShow.Season_type 
+  - let Season_temperature = toShow.temperature 
+  - let Season_month = toShow.Season_month 
+   
+  div.row(class='mb-2') 
+    div.mr-1 ID is 
+    div #{Seasonid} 
+  - let actionid = "/resource/Season/" + Seasonid 
+  form(id='SeasonForm', action= actionid, method="PUT") 
     div.form-group 
         label.SeasonAttr(for='Season_type') Season type 
-        input#Season_type(type='text', name='Season_type') 
+        input#Season_type(type='text', name='Season_type', value= Season_type ) 
     div.form-group 
         label.SeasonAttr(for='temperature') Season temperature 
-        input#temperature(type='number', name='temperature') 
+        input#temperature(type='number', name='temperature', value= Season_temperature ) 
     div.form-group 
         label.SeasonAttr(for='Season_month') Season month 
-        input#Season_month(type='text', name='Season_month') 
+        input#Season_month(type='text', name='Season_month', value= Season_month ) 
     input(type="submit") 
  
   script. 
@@ -27,12 +31,12 @@ block content
         method: 'PUT', 
         body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
       }).then((resp) => { 
-        return resp.text(); // or resp.text() or whatever the server sends 
+        return resp.json(); // or resp.text() or whatever the server sends 
       }).then((body) => { 
-        alert("Save succeded") 
+        alert("Update succeded") 
         // TODO handle body 
       }).catch((error) => { 
         // TODO handle error 
-        alert("Save failed " + error ) 
+        alert("Update failed " + error ) 
       }); 
     }); 

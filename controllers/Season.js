@@ -116,7 +116,7 @@ exports.Season_create_Page =  function(req, res) {
 // Handle building the view for updating a Season. 
 // query provides the id 
 exports.Season_update_Page =  async function(req, res) { 
-    console.log("update view for item "+req.query.id) 
+    console.log("update view for item " + req.query.id) 
     try{ 
         let result = await Season.findById(req.query.id) 
         res.render('Seasonupdate', { title: 'Season Update', toShow: result }); 
