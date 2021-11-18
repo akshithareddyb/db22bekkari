@@ -4,17 +4,18 @@ block content
   h1= title
   p Welcome to #{title}
   - let items = results 
-   div(class = "container-fluid")
-    div(class = "row")
-     each s,index in items
-        div(class="col-sm-4" onclick=`buy(${index})`) Season-type: #{s.Season_type} 
-        br
-        br 
-        div(class="col-sm-4" onclick=`buy(${index})`) temperature: #{s.temperature}
-        br
-        br  
-        div(class="col-sm-4" onclick=`buy(${index})`) Season-month: #{s.Season_month}
-        script.
-                function buy(itemNo){
-                    alert(`You chosen season ${itemNo+1}`)
-                }
+   div(class="container-fluid") 
+    div(class="row m-1") 
+      each item in items  
+        - let destination = `dispatch(\"/Season/update?id=${item._id}\")` 
+        div(class="row-sm-2", class="m-1") Season #{item.Season_type}(#{item.Season_month}) is #{item.temperature} 
+          button.btn( class="btn-primary ml-1", onclick= destination) Update 
+   
+  script. 
+    function dispatch(path){ 
+      window.location.href=path 
+    } 
+  script.
+    function buy(itemNo){
+      alert(`You chosen season ${itemNo+1}`)
+    }
